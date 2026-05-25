@@ -1,6 +1,10 @@
 import { Topbar } from "@/components/layout/Topbar";
 import { Card } from "@/components/ui";
 import { HomeAIDrawerSlot } from "./HomeAIDrawerSlot";
+import { prisma } from "@/lib/db";
+import { WeekRockCard } from "@/components/rocks/WeekRockCard";
+import { DayRockCard } from "@/components/rocks/DayRockCard";
+import { getCurrentWeekRock, getTodayDailyRock } from "@/lib/rocks/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +18,18 @@ export const dynamic = "force-dynamic";
  *   - Focus mode entry  → Phase 1.6
  */
 export default async function HomePage() {
+  const user = await prisma.user.findFirst({
+    orderBy: { createdAt: "asc" },
+    select: { id: true, timezone: true },
+  });
+
+  const [weekRock, dayRock] = user
+    ? await Promise.all([
+        getCurrentWeekRock(user.id, user.timezone),
+        getTodayDailyRock(user.id, user.timezone),
+      ])
+    : [null, null];
+
   return (
     <>
       <Topbar
@@ -23,26 +39,10 @@ export default async function HomePage() {
       />
       <section className="px-9 grid gap-4 max-w-[1200px]">
         {/* Zone 1: Big Rock card (week rock + day rock side-by-side) — Phase 1.2 */}
-        <Card>
-          <div
-            data-zone="big-rock"
-            aria-label="Big Rock card placeholder"
-            className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[140px]"
-          >
-            <div className="rounded-md border border-dashed border-cream-300 p-4 text-bark-500 text-[13px]">
-              <div className="font-[var(--font-pixel)] text-[8px] tracking-[0.08em] uppercase mb-2">
-                Week Rock — Phase 1.2
-              </div>
-              Placeholder.
-            </div>
-            <div className="rounded-md border border-dashed border-cream-300 p-4 text-bark-500 text-[13px]">
-              <div className="font-[var(--font-pixel)] text-[8px] tracking-[0.08em] uppercase mb-2">
-                Day Rock — Phase 1.2
-              </div>
-              Placeholder. &ldquo;Start deep work&rdquo; ships in Phase 1.6.
-            </div>
-          </div>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <WeekRockCard rock={weekRock} />
+          <DayRockCard rock={dayRock} weekRockId={weekRock?.id ?? null} />
+        </div>
 
         {/* Zone 2: Embedded Google Calendar week strip — Phase 1.4 */}
         <Card>

@@ -19,6 +19,7 @@ import { prisma } from "@/lib/db";
 import { loadIdentity } from "@/lib/retention/queries";
 import { loadProgress } from "@/lib/progress/queries";
 import { loadQuests, evaluateQuests } from "@/lib/retention/quests";
+import { getWeekDailyRockStats } from "@/lib/rocks/queries";
 import { currentSeasonView, pastSeasons } from "@/lib/retention/seasons";
 import { levelFromXp } from "@/lib/xp";
 
@@ -62,13 +63,14 @@ export default async function MePage() {
 
   await evaluateQuests(user.id);
 
-  const [identity, progress, season, past, quests, profile] = await Promise.all([
+  const [identity, progress, season, past, quests, profile, rockStats] = await Promise.all([
     loadIdentity(user.id),
     loadProgress(user.id, user.timezone),
     currentSeasonView(user.id),
     pastSeasons(user.id),
     loadQuests(user.id),
     prisma.gameProfile.findUnique({ where: { userId: user.id } }),
+    getWeekDailyRockStats(user.id, user.timezone),
   ]);
 
   // weeklyXp is not in loadProgress's return shape — compute inline (Phase 1.2 will
@@ -200,7 +202,7 @@ export default async function MePage() {
         <Card>
           <SectionHeading icon={CalendarCheck}>This week</SectionHeading>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3">
-            <SummaryStat label="Daily rocks done" value="—" hint="Phase 1.2" />
+            <SummaryStat label="Daily rocks done" value={`${rockStats.done}/${rockStats.total}`} />
             <SummaryStat
               label="Habits completed"
               value={`${progress.consistencyDone}/${progress.consistencyTotal}`}

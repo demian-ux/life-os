@@ -5,7 +5,7 @@ import { z } from "zod";
 import { TraitAxis } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { todayKey, getWeekStart } from "@/lib/dates";
-import { awardXp, XP_RULES } from "@/lib/xp";
+import { awardXp } from "@/lib/xp";
 import { DEFAULT_TIMEZONE } from "@/lib/user";
 
 // ---------------------------------------------------------------------------
@@ -49,14 +49,6 @@ async function getTimezone(userId: string): Promise<string> {
 // Validators
 // ---------------------------------------------------------------------------
 
-const TRAIT_VALUES = [
-  TraitAxis.DISCIPLINE,
-  TraitAxis.FOCUS,
-  TraitAxis.AUDACITY,
-  TraitAxis.CRAFT,
-  TraitAxis.RECOVERY,
-] as const;
-
 const setWeekRockSchema = z.object({
   title: z.string().min(1).max(140),
   trait: z.enum([
@@ -83,9 +75,6 @@ const setDailyRockSchema = z.object({
 const rockIdSchema = z.object({
   id: z.string().min(1),
 });
-
-// Suppress unused variable warning — kept for documentation of valid values
-void TRAIT_VALUES;
 
 // ---------------------------------------------------------------------------
 // WeekRock actions

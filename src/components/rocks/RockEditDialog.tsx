@@ -49,7 +49,12 @@ export function RockEditDialog({
     }
   }, [open]);
 
-  // Reset form state when open or initial values change
+  // Reset form fields whenever the dialog opens or its initial values change.
+  // This is intentional: the dialog is a controlled modal whose state must be
+  // re-initialised from props each time it is opened. The parent supplies new
+  // initialTitle/initialTrait on each open, so calling setState here is the
+  // correct synchronisation point and does not cause runaway cascading renders.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (open) {
       setTitle(initialTitle);
@@ -57,6 +62,7 @@ export function RockEditDialog({
       setError(null);
     }
   }, [open, initialTitle, initialTrait]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Handle native dialog cancel (Escape key)
   useEffect(() => {

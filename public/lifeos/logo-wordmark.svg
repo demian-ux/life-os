@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" fill="none">
+  <defs>
+    <linearGradient id="wmMark" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EE6A4D"></stop>
+      <stop offset="1" stop-color="#F3B842"></stop>
+    </linearGradient>
+  </defs>
+  
+  <circle cx="28" cy="28" r="24" fill="#F8F1E1"></circle>
+  <path d="M28 44 C 16 44, 13 34, 16 26 C 19 17, 28 17, 30 21 C 32 25, 30 28, 27 28 C 24 28, 22 26, 24 23" stroke="url(#wmMark)" stroke-width="5" stroke-linecap="round" fill="none"></path>
+  <path d="M34 21 Q 41 16, 42 21 Q 42 28, 35 28 Q 33 25, 34 21 Z" fill="#6BAE7C"></path>
+  <circle cx="28" cy="44" r="3" fill="#3B2E1E"></circle>
+  
+  <text x="64" y="38" font-family="Newsreader, Georgia, serif" font-weight="600" font-size="30" fill="#2B2114" letter-spacing="-0.5">Life</text>
+  <text x="129" y="38" font-family="Newsreader, Georgia, serif" font-weight="600" font-size="30" font-style="italic" fill="#EE6A4D" letter-spacing="-0.5">OS</text>
+</svg>

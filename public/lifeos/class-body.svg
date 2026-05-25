@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  
+  <path d="M40 4 L 72 14 L 72 44 C 72 58, 58 70, 40 76 C 22 70, 8 58, 8 44 L 8 14 Z" fill="#EE6A4D" stroke="#A8412B" stroke-width="2.5"></path>
+  <path d="M40 4 L 72 14 L 72 44 C 72 58, 58 70, 40 76 C 22 70, 8 58, 8 44 L 8 14 Z" fill="none" stroke="#FCE4DD" stroke-width="1" stroke-dasharray="2 3" transform="scale(0.92) translate(3.5,3.5)"></path>
+  
+  <path d="M40 28 c -10 0 -16 8 -16 18 c 0 8 6 14 16 14 c 10 0 16 -6 16 -14 c 0 -10 -6 -18 -16 -18 z" fill="#FCE4DD"></path>
+  <path d="M34 24 c 0 -4 4 -6 6 -6 c 2 0 6 2 6 6" stroke="#FCE4DD" stroke-width="4" fill="none" stroke-linecap="round"></path>
+  
+  <text x="40" y="55" text-anchor="middle" font-family="Press Start 2P, monospace" font-size="11" fill="#A8412B">B</text>
+</svg>

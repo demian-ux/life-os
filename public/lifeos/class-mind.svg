@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  
+  <path d="M40 4 L 72 14 L 72 44 C 72 58, 58 70, 40 76 C 22 70, 8 58, 8 44 L 8 14 Z" fill="#5B91D4" stroke="#2E5B96" stroke-width="2.5"></path>
+  
+  <path d="M50 22 a 20 20 0 1 0 0 32 a 14 14 0 1 1 0 -32 z" fill="#E1ECF8"></path>
+  
+  <path d="M28 22 l 2 5 l 5 2 l -5 2 l -2 5 l -2 -5 l -5 -2 l 5 -2 z" fill="#E1ECF8"></path>
+  <text x="40" y="62" text-anchor="middle" font-family="Press Start 2P, monospace" font-size="10" fill="#2E5B96">MIND</text>
+</svg>

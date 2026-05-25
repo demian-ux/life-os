@@ -1,0 +1,446 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   LIFE OS — Design tokens
+   Warm. Friendly. A little bit RPG.
+   Migrated from Life OS design-handoff (May 2026).
+
+   Legacy aliases (bg, surface, ink, ink-soft, line, accent, status-*) keep
+   un-migrated screens compiling during phased rollout. Each phase replaces
+   them with the new tokens (cream-*, bark-*, coral-*, etc.) on a screen-by-
+   screen basis.
+   ========================================================================= */
+
+:root {
+  /* Neutrals — warm, never cool */
+  --cream-50:  #FDFAF3;
+  --cream-100: #F8F1E1;
+  --cream-200: #F1E6CE;
+  --cream-300: #E6D6B3;
+  --cream-400: #C9B48B;
+  --bark-500:  #8A7558;
+  --bark-600:  #5C4A33;
+  --bark-700:  #3B2E1E;
+  --ink-800:   #2B2114;
+  --ink-900:   #1A140B;
+
+  /* Class colors — one per life domain */
+  --coral-500: #EE6A4D;   /* BODY */
+  --coral-300: #F7B5A6;
+  --coral-100: #FCE4DD;
+
+  --sky-500:   #5B91D4;   /* MIND */
+  --sky-300:   #B0C9EB;
+  --sky-100:   #E1ECF8;
+
+  --gold-500:  #F3B842;   /* MONEY */
+  --gold-300:  #F8D58B;
+  --gold-100:  #FCEDC9;
+
+  --leaf-500:  #6BAE7C;   /* CRAFT */
+  --leaf-300:  #B2D5BA;
+  --leaf-100:  #DEEDE2;
+
+  --plum-500:  #9B6FB6;   /* BONDS */
+  --plum-300:  #C9B0DB;
+  --plum-100:  #ECE0F2;
+
+  /* Semantic state */
+  --success-500: var(--leaf-500);
+  --warn-500:    #E89A3C;
+  --danger-500:  #C84A3F;
+  --xp-500:      #C58CD9;
+  --xp-glow:     #FFD46B;
+
+  /* Semantic roles */
+  --bg-page:    var(--cream-50);
+  --bg-surface: var(--cream-100);
+  --bg-raised:  #FFFFFF;
+  --bg-sunken:  var(--cream-200);
+  --bg-inverse: var(--ink-800);
+
+  --fg-1:           var(--ink-800);
+  --fg-2:           var(--bark-600);
+  --fg-3:           var(--bark-500);
+  --fg-placeholder: var(--cream-400);
+  --fg-on-inverse:  var(--cream-50);
+  --fg-link:        var(--coral-500);
+
+  --border-soft:    var(--cream-200);
+  --border-default: var(--cream-300);
+  --border-strong:  var(--bark-500);
+
+  --accent-primary:    var(--coral-500);
+  --accent-on-primary: #FFFFFF;
+
+  /* Legacy aliases — keep un-migrated screens compiling */
+  --bg:         var(--cream-50);
+  --surface:    #FFFFFF;
+  --ink:        var(--ink-800);
+  --ink-soft:   var(--bark-600);
+  --ink-muted:  var(--bark-500);
+  --line:       var(--cream-300);
+  --line-soft:  var(--cream-200);
+  --accent:     var(--coral-500);
+  --accent-soft: var(--coral-100);
+  --accent-strong: #A8412B;
+  --status-done:    var(--leaf-500);
+  --status-skipped: var(--bark-500);
+  --status-missed:  var(--danger-500);
+  --status-warn:    var(--warn-500);
+  --background: var(--cream-50);
+  --foreground: var(--ink-800);
+
+  /* Typography */
+  --font-display: var(--font-newsreader), Georgia, serif;
+  --font-body:    var(--font-nunito), -apple-system, system-ui, sans-serif;
+  --font-pixel:   var(--font-press-start), monospace;
+  --font-mono-game: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Type scale */
+  --fs-display-xl: 64px;   --lh-display-xl: 1.05;
+  --fs-display-l:  48px;   --lh-display-l:  1.10;
+  --fs-display-m:  36px;   --lh-display-m:  1.15;
+  --fs-h1:         32px;   --lh-h1:         1.20;
+  --fs-h2:         24px;   --lh-h2:         1.25;
+  --fs-h3:         20px;   --lh-h3:         1.30;
+  --fs-h4:         17px;   --lh-h4:         1.40;
+  --fs-body:       16px;   --lh-body:       1.55;
+  --fs-body-s:     14px;   --lh-body-s:     1.50;
+  --fs-caption:    12px;   --lh-caption:    1.40;
+  --fs-pixel:      10px;   --lh-pixel:      1.20;
+
+  /* Weights */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold: 600;
+  --fw-bold:    700;
+  --fw-black:   800;
+
+  /* Spacing — 4px base */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Radius */
+  --radius-xs:   6px;
+  --radius-sm:  10px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-1: 0 1px 0 rgba(91, 74, 51, 0.06),
+              0 1px 2px rgba(91, 74, 51, 0.06);
+  --shadow-2: 0 1px 0 rgba(91, 74, 51, 0.06),
+              0 4px 10px rgba(91, 74, 51, 0.08);
+  --shadow-3: 0 2px 0 rgba(91, 74, 51, 0.05),
+              0 12px 24px rgba(91, 74, 51, 0.12);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                  inset 0 -2px 0 rgba(91, 74, 51, 0.08);
+  --shadow-tactile:
+    0 0 0 1px rgba(91, 74, 51, 0.06),
+    0 2px 0 0 rgba(91, 74, 51, 0.10),
+    0 6px 14px rgba(91, 74, 51, 0.08);
+  --glow-xp: 0 0 0 3px rgba(197, 140, 217, 0.25),
+             0 0 24px rgba(255, 212, 107, 0.45);
+
+  /* Motion */
+  --ease-pop:    cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-quick:   140ms;
+  --dur-base:    220ms;
+  --dur-slow:    420ms;
+}
+
+@theme inline {
+  /* Neutrals */
+  --color-cream-50:  var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+  --color-cream-400: var(--cream-400);
+  --color-bark-500:  var(--bark-500);
+  --color-bark-600:  var(--bark-600);
+  --color-bark-700:  var(--bark-700);
+  --color-ink-800:   var(--ink-800);
+  --color-ink-900:   var(--ink-900);
+
+  /* Class colors */
+  --color-coral-500: var(--coral-500);
+  --color-coral-300: var(--coral-300);
+  --color-coral-100: var(--coral-100);
+  --color-sky-500:   var(--sky-500);
+  --color-sky-300:   var(--sky-300);
+  --color-sky-100:   var(--sky-100);
+  --color-gold-500:  var(--gold-500);
+  --color-gold-300:  var(--gold-300);
+  --color-gold-100:  var(--gold-100);
+  --color-leaf-500:  var(--leaf-500);
+  --color-leaf-300:  var(--leaf-300);
+  --color-leaf-100:  var(--leaf-100);
+  --color-plum-500:  var(--plum-500);
+  --color-plum-300:  var(--plum-300);
+  --color-plum-100:  var(--plum-100);
+
+  /* State */
+  --color-success: var(--success-500);
+  --color-warn:    var(--warn-500);
+  --color-danger:  var(--danger-500);
+  --color-xp:      var(--xp-500);
+  --color-xp-glow: var(--xp-glow);
+
+  /* Semantic roles */
+  --color-bg-page:    var(--bg-page);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-raised:  var(--bg-raised);
+  --color-bg-sunken:  var(--bg-sunken);
+  --color-bg-inverse: var(--bg-inverse);
+
+  --color-fg-1: var(--fg-1);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-fg-placeholder: var(--fg-placeholder);
+  --color-fg-on-inverse:  var(--fg-on-inverse);
+  --color-fg-link:        var(--fg-link);
+
+  --color-border-soft:    var(--border-soft);
+  --color-border-default: var(--border-default);
+  --color-border-strong:  var(--border-strong);
+
+  --color-accent-primary:    var(--accent-primary);
+  --color-accent-on-primary: var(--accent-on-primary);
+
+  /* Legacy color aliases — kept until every screen is migrated */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-line-soft: var(--line-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-strong: var(--accent-strong);
+  --color-status-done:    var(--status-done);
+  --color-status-skipped: var(--status-skipped);
+  --color-status-missed:  var(--status-missed);
+  --color-status-warn:    var(--status-warn);
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+
+  /* Fonts */
+  --font-sans:    var(--font-body);
+  --font-serif:   var(--font-display);
+  --font-pixel:   var(--font-pixel);
+  --font-mono:    var(--font-mono-game);
+
+  /* Type scale tokens — Tailwind text-* utilities */
+  --text-display-xl: var(--fs-display-xl);
+  --text-display-xl--line-height: var(--lh-display-xl);
+  --text-display-xl--letter-spacing: -0.02em;
+
+  --text-display-l: var(--fs-display-l);
+  --text-display-l--line-height: var(--lh-display-l);
+  --text-display-l--letter-spacing: -0.015em;
+
+  --text-display-m: var(--fs-display-m);
+  --text-display-m--line-height: var(--lh-display-m);
+  --text-display-m--letter-spacing: -0.01em;
+
+  --text-h1: var(--fs-h1);
+  --text-h1--line-height: var(--lh-h1);
+  --text-h1--letter-spacing: -0.01em;
+
+  --text-h2: var(--fs-h2);
+  --text-h2--line-height: var(--lh-h2);
+
+  --text-h3: var(--fs-h3);
+  --text-h3--line-height: var(--lh-h3);
+
+  --text-h4: var(--fs-h4);
+  --text-h4--line-height: var(--lh-h4);
+
+  --text-body: var(--fs-body);
+  --text-body--line-height: var(--lh-body);
+
+  --text-body-sm: var(--fs-body-s);
+  --text-body-sm--line-height: var(--lh-body-s);
+
+  --text-caption: var(--fs-caption);
+  --text-caption--line-height: var(--lh-caption);
+  --text-caption--letter-spacing: 0.08em;
+
+  --text-pixel: var(--fs-pixel);
+  --text-pixel--line-height: var(--lh-pixel);
+  --text-pixel--letter-spacing: 0.02em;
+
+  /* Legacy type tokens — kept until every screen is migrated */
+  --text-display: var(--fs-h1);
+  --text-display--line-height: var(--lh-h1);
+  --text-display--letter-spacing: -0.01em;
+
+  --text-title: var(--fs-h3);
+  --text-title--line-height: var(--lh-h3);
+  --text-title--letter-spacing: -0.005em;
+
+  --text-meta: var(--fs-caption);
+  --text-meta--line-height: var(--lh-caption);
+  --text-meta--letter-spacing: 0.02em;
+
+  --text-micro: 10px;
+  --text-micro--line-height: 0.875rem;
+  --text-micro--letter-spacing: 0.06em;
+
+  /* Radius */
+  --radius-xs:   var(--radius-xs);
+  --radius-sm:   var(--radius-sm);
+  --radius-md:   var(--radius-md);
+  --radius-lg:   var(--radius-lg);
+  --radius-xl:   var(--radius-xl);
+  --radius-pill: var(--radius-pill);
+  /* Legacy aliases */
+  --radius-card:  var(--radius-md);
+  --radius-input: var(--radius-sm);
+
+  /* Shadows */
+  --shadow-1: var(--shadow-1);
+  --shadow-2: var(--shadow-2);
+  --shadow-3: var(--shadow-3);
+  --shadow-tactile: var(--shadow-tactile);
+  --shadow-card: var(--shadow-1);
+  --shadow-card-hover: var(--shadow-2);
+  --shadow-glow-xp: var(--glow-xp);
+
+  /* Motion */
+  --ease-pop: var(--ease-pop);
+  --ease-soft: var(--ease-soft);
+  --ease-out: var(--ease-soft);
+  --animate-page-enter: page-enter 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  --animate-xp-in: xp-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-pop: pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-fade: fade 240ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  --animate-bob: bob 5s ease-in-out infinite;
+  --animate-bolt-pulse: bolt-pulse 1.4s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Resets + base
+   ───────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg-page);
+  background-image: url('/lifeos/pattern-sprouts.svg');
+  background-repeat: repeat;
+  background-size: 400px 240px;
+  background-attachment: fixed;
+  color: var(--fg-1);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+button { font: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+input, textarea, select { font: inherit; color: inherit; }
+
+::selection {
+  background: var(--coral-100);
+  color: var(--ink-800);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Semantic type — usable directly as classes
+   ───────────────────────────────────────────────────────────── */
+.t-display-xl { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-display-xl); line-height: var(--lh-display-xl); letter-spacing: -0.02em; color: var(--fg-1); }
+.t-display-l  { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-display-l);  line-height: var(--lh-display-l);  letter-spacing: -0.015em; color: var(--fg-1); }
+.t-display-m  { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-display-m);  line-height: var(--lh-display-m);  letter-spacing: -0.01em;  color: var(--fg-1); }
+
+.t-h1 { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: -0.01em; color: var(--fg-1); }
+.t-h2 { font-family: var(--font-body); font-weight: 700; font-size: var(--fs-h2); line-height: var(--lh-h2); color: var(--fg-1); }
+.t-h3 { font-family: var(--font-body); font-weight: 700; font-size: var(--fs-h3); line-height: var(--lh-h3); color: var(--fg-1); }
+.t-h4 { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h4); line-height: var(--lh-h4); color: var(--fg-1); }
+
+.t-body    { font-family: var(--font-body); font-weight: 400; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-1); }
+.t-body-s  { font-family: var(--font-body); font-weight: 400; font-size: var(--fs-body-s); line-height: var(--lh-body-s); color: var(--fg-2); }
+.t-caption { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.t-pixel { font-family: var(--font-pixel); font-weight: 400; font-size: var(--fs-pixel); line-height: var(--lh-pixel); letter-spacing: 0.02em; }
+.t-mono  { font-family: var(--font-mono-game); font-size: var(--fs-body-s); }
+.t-quote { font-family: var(--font-display); font-style: italic; font-weight: 400; font-size: var(--fs-h3); line-height: 1.45; color: var(--fg-2); }
+
+/* ─────────────────────────────────────────────────────────────
+   Class tone helpers
+   ───────────────────────────────────────────────────────────── */
+.tone-body  { color: var(--coral-500); }
+.tone-mind  { color: var(--sky-500); }
+.tone-money { color: var(--gold-500); }
+.tone-craft { color: var(--leaf-500); }
+.tone-bonds { color: var(--plum-500); }
+
+/* ─────────────────────────────────────────────────────────────
+   Animations — keyframes referenced by --animate-* tokens
+   ───────────────────────────────────────────────────────────── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pop {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes xp-in {
+  0%   { transform: translateX(40px) scale(0.6); opacity: 0; }
+  60%  { transform: translateX(0) scale(1.05); opacity: 1; }
+  100% { transform: translateX(0) scale(1); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+@keyframes bolt-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 212, 107, 0); }
+  50%      { box-shadow: 0 0 0 8px rgba(255, 212, 107, 0.45); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* "Reduce mascots" mode — toggled on <body> when user opts out */
+body.reduce-mascots .mascot-panel { display: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   Print — recap layout
+   ───────────────────────────────────────────────────────────── */
+@media print {
+  aside, header, nav, .recap-hide-print { display: none !important; }
+  body { background: #ffffff; color: #1a1814; background-image: none; }
+  main { display: block !important; }
+  .recap-section { max-width: none !important; padding: 1.5rem !important; }
+}

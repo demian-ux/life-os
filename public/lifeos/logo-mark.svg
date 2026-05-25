@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  
+  <defs>
+    <linearGradient id="lifeMark" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#EE6A4D"></stop>
+      <stop offset="1" stop-color="#F3B842"></stop>
+    </linearGradient>
+  </defs>
+  
+  <circle cx="32" cy="32" r="28" fill="#F8F1E1"></circle>
+  
+  <path d="M32 50 C 18 50, 14 38, 18 28 C 22 18, 32 18, 34 22 C 36 26, 34 30, 30 30 C 26 30, 24 27, 26 24" stroke="url(#lifeMark)" stroke-width="6" stroke-linecap="round" fill="none"></path>
+  
+  <path d="M40 22 Q 48 16, 50 22 Q 50 30, 42 30 Q 40 26, 40 22 Z" fill="#6BAE7C"></path>
+  
+  <circle cx="32" cy="50" r="3.5" fill="#3B2E1E"></circle>
+</svg>

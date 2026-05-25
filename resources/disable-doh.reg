@@ -1,0 +1,16 @@
+Windows Registry Editor Version 5.00
+
+; Life OS site blocking uses the Windows hosts file. DNS-over-HTTPS can bypass
+; hosts-file resolution in modern browsers, so these enterprise policies turn
+; DoH off for the common browsers on this machine. Import as Administrator,
+; then restart the browsers.
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome]
+"DnsOverHttpsMode"="off"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+"DnsOverHttpsMode"="off"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Mozilla\Firefox\DNSOverHTTPS]
+"Enabled"=dword:00000000
+"Locked"=dword:00000001

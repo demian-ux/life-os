@@ -1,13 +1,14 @@
 import { Topbar } from "@/components/layout/Topbar";
-import { Card } from "@/components/ui";
 import { HomeAIDrawerSlot } from "./HomeAIDrawerSlot";
 import { prisma } from "@/lib/db";
 import { WeekRockCard } from "@/components/rocks/WeekRockCard";
 import { DayRockCard } from "@/components/rocks/DayRockCard";
+import { GoogleCalendarEmbed } from "@/components/home/GoogleCalendarEmbed";
 import { HomeHabitsRow } from "@/components/home/HomeHabitsRow";
 import { HomeTasksRow } from "@/components/home/HomeTasksRow";
 import { getCurrentWeekRock, getTodayDailyRock } from "@/lib/rocks/queries";
 import { getTodayHabits, getTodayTasks } from "@/lib/habits/today-queries";
+import { getGcalEmbedUrl } from "@/lib/user-preferences";
 
 export const dynamic = "force-dynamic";
 
@@ -22,8 +23,9 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   const user = await prisma.user.findFirst({
     orderBy: { createdAt: "asc" },
-    select: { id: true, timezone: true },
+    select: { id: true, timezone: true, preferences: true },
   });
+  const gcalEmbedUrl = user ? getGcalEmbedUrl(user.preferences) : null;
 
   const [weekRock, dayRock, habits, tasks] = user
     ? await Promise.all([
@@ -49,20 +51,7 @@ export default async function HomePage() {
         </div>
 
         {/* Zone 2: Embedded Google Calendar week strip — Phase 1.4 */}
-        <Card>
-          <div
-            data-zone="gcal-embed"
-            aria-label="Google Calendar embed placeholder"
-            className="min-h-[320px] rounded-md border border-dashed border-cream-300 flex items-center justify-center text-bark-500 text-[13px]"
-          >
-            <div className="text-center">
-              <div className="font-[var(--font-pixel)] text-[8px] tracking-[0.08em] uppercase mb-2">
-                Google Calendar — Phase 1.4
-              </div>
-              Iframe embed lands here.
-            </div>
-          </div>
-        </Card>
+        <GoogleCalendarEmbed embedUrl={gcalEmbedUrl} />
 
         {/* Zone 3+4: Habits row (left) + Today's tasks (right) — Phase 1.3 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

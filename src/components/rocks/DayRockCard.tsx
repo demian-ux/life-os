@@ -119,7 +119,7 @@ export function DayRockCard({
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         onSubmit={handleSetRock}
-        heading={rock === null ? "Set today&rsquo;s rock" : "Edit today&rsquo;s rock"}
+        heading={rock === null ? "Set today’s rock" : "Edit today’s rock"}
         initialTitle={rock?.title}
         initialTrait={rock?.trait}
         submitLabel={rock === null ? "Set rock" : "Save changes"}

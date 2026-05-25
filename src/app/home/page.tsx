@@ -1,4 +1,5 @@
 import { Topbar } from "@/components/layout/Topbar";
+import { HomeAIDrawerContent } from "./HomeAIDrawerContent";
 import { HomeAIDrawerSlot } from "./HomeAIDrawerSlot";
 import { prisma } from "@/lib/db";
 import { WeekRockCard } from "@/components/rocks/WeekRockCard";
@@ -41,7 +42,16 @@ export default async function HomePage() {
       <Topbar
         title="Home"
         subtitle="Your unified workspace."
-        actions={<HomeAIDrawerSlot />}
+        actions={
+          <HomeAIDrawerSlot>
+            {user ? (
+              <HomeAIDrawerContent
+                userId={user.id}
+                preferences={user.preferences}
+              />
+            ) : null}
+          </HomeAIDrawerSlot>
+        }
       />
       <section className="px-9 grid gap-4 max-w-[1200px]">
         {/* Zone 1: Big Rock card (week rock + day rock side-by-side) — Phase 1.2 */}

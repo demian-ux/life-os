@@ -1,15 +1,37 @@
 "use client";
 
-import { useState } from "react";
-import { MessageCircle } from "lucide-react";
+import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
+import { MessageCircle, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 
+type HomeAIDrawerSlotProps = {
+  children?: ReactNode;
+};
+
 /**
- * Phase 1.1 placeholder for the AI drawer (spec §8).
- * Renders a topbar toggle and a labeled stub panel. Real chat ships in Phase 1.5.
+ * Phase 1.5 AI drawer wrapper.
+ *
+ * Phase 1.1 shipped a placeholder stub here. Phase 1.5 keeps the same slot
+ * (topbar toggle + slide-in panel) but renders real chat content as children.
+ *
+ * State persistence: remembers open/closed within the session via sessionStorage
+ * (spec §8 "remembers last state per session"). Default closed on first load.
  */
-export function HomeAIDrawerSlot() {
+const STORAGE_KEY = "home-ai-drawer-open";
+
+export function HomeAIDrawerSlot({ children }: HomeAIDrawerSlotProps) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (sessionStorage.getItem(STORAGE_KEY) === "1") setOpen(true);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    sessionStorage.setItem(STORAGE_KEY, open ? "1" : "0");
+  }, [open]);
 
   return (
     <>
@@ -24,25 +46,34 @@ export function HomeAIDrawerSlot() {
           "hover:bg-cream-50 transition-colors duration-[120ms]",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500/40",
         )}
-        title="Toggle AI drawer (placeholder)"
+        title="Toggle AI drawer"
       >
         <MessageCircle className="h-4 w-4" strokeWidth={2} />
       </button>
       <aside
         id="home-ai-drawer"
-        hidden={!open}
-        aria-label="AI drawer (placeholder)"
+        aria-label="AI co-pilot drawer"
+        aria-hidden={!open}
         className={cn(
-          "fixed right-0 top-0 bottom-0 w-[360px] bg-white border-l border-cream-200",
-          "shadow-[var(--shadow-1)] p-6 z-40",
+          "fixed right-0 top-0 bottom-0 w-[400px] max-w-[100vw] bg-white",
+          "border-l border-cream-200 shadow-[var(--shadow-1)] p-4 z-40",
+          "transition-transform duration-200 ease-out",
+          open ? "translate-x-0" : "translate-x-full pointer-events-none",
         )}
       >
-        <div className="font-[var(--font-pixel)] text-[8px] text-bark-600 tracking-[0.08em] mb-3 uppercase">
-          AI Drawer (Phase 1.5)
-        </div>
-        <p className="text-[13px] text-bark-600">
-          Placeholder. The real AI co-pilot ships in Phase 1.5.
-        </p>
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Close AI drawer"
+          className={cn(
+            "absolute top-3 right-3 w-7 h-7 flex items-center justify-center",
+            "rounded-md text-bark-600 hover:bg-cream-100 transition-colors duration-[120ms]",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500/40",
+          )}
+        >
+          <X className="h-4 w-4" />
+        </button>
+        <div className="pt-8">{children}</div>
       </aside>
     </>
   );

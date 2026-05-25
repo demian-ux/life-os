@@ -4,17 +4,19 @@ import { HomeAIDrawerSlot } from "./HomeAIDrawerSlot";
 import { prisma } from "@/lib/db";
 import { WeekRockCard } from "@/components/rocks/WeekRockCard";
 import { DayRockCard } from "@/components/rocks/DayRockCard";
+import { HomeHabitsRow } from "@/components/home/HomeHabitsRow";
+import { HomeTasksRow } from "@/components/home/HomeTasksRow";
 import { getCurrentWeekRock, getTodayDailyRock } from "@/lib/rocks/queries";
+import { getTodayHabits, getTodayTasks } from "@/lib/habits/today-queries";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Phase 1.1 skeleton of the Home dashboard (spec §5).
- * All five zones are labeled placeholder stubs. Real mechanics:
- *   - Big Rock card     → Phase 1.2
- *   - Habits + Tasks    → Phase 1.3
+ * Home dashboard (spec §5).
+ *   - Big Rock card     ✓ Phase 1.2
+ *   - Habits + Tasks    ✓ Phase 1.3
  *   - Embedded GCal     → Phase 1.4
- *   - AI drawer         → Phase 1.5
+ *   - AI drawer         → Phase 1.5 (toggle stub shipped 1.1)
  *   - Focus mode entry  → Phase 1.6
  */
 export default async function HomePage() {
@@ -23,12 +25,14 @@ export default async function HomePage() {
     select: { id: true, timezone: true },
   });
 
-  const [weekRock, dayRock] = user
+  const [weekRock, dayRock, habits, tasks] = user
     ? await Promise.all([
         getCurrentWeekRock(user.id, user.timezone),
         getTodayDailyRock(user.id, user.timezone),
+        getTodayHabits(user.id, user.timezone),
+        getTodayTasks(user.id, user.timezone),
       ])
-    : [null, null];
+    : [null, null, [], []];
 
   return (
     <>
@@ -62,30 +66,8 @@ export default async function HomePage() {
 
         {/* Zone 3+4: Habits row (left) + Today's tasks (right) — Phase 1.3 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card>
-            <div
-              data-zone="habits-row"
-              aria-label="Morning habits row placeholder"
-              className="min-h-[120px] rounded-md border border-dashed border-cream-300 p-4 text-bark-500 text-[13px]"
-            >
-              <div className="font-[var(--font-pixel)] text-[8px] tracking-[0.08em] uppercase mb-2">
-                Morning Habits — Phase 1.3
-              </div>
-              Placeholder.
-            </div>
-          </Card>
-          <Card>
-            <div
-              data-zone="today-tasks"
-              aria-label="Today's tasks placeholder"
-              className="min-h-[120px] rounded-md border border-dashed border-cream-300 p-4 text-bark-500 text-[13px]"
-            >
-              <div className="font-[var(--font-pixel)] text-[8px] tracking-[0.08em] uppercase mb-2">
-                Today&rsquo;s Tasks — Phase 1.3
-              </div>
-              Placeholder.
-            </div>
-          </Card>
+          <HomeHabitsRow habits={habits} />
+          <HomeTasksRow tasks={tasks} />
         </div>
       </section>
     </>

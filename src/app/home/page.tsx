@@ -4,11 +4,13 @@ import { HomeAIDrawerSlot } from "./HomeAIDrawerSlot";
 import { prisma } from "@/lib/db";
 import { WeekRockCard } from "@/components/rocks/WeekRockCard";
 import { DayRockCard } from "@/components/rocks/DayRockCard";
+import { FocusMode } from "@/components/focus/FocusMode";
 import { GoogleCalendarEmbed } from "@/components/home/GoogleCalendarEmbed";
 import { HomeHabitsRow } from "@/components/home/HomeHabitsRow";
 import { HomeTasksRow } from "@/components/home/HomeTasksRow";
 import { getCurrentWeekRock, getTodayDailyRock } from "@/lib/rocks/queries";
 import { getTodayHabits, getTodayTasks } from "@/lib/habits/today-queries";
+import { getActiveFocusSession } from "@/lib/actions/focus-actions";
 import { getGcalEmbedUrl } from "@/lib/user-preferences";
 
 export const dynamic = "force-dynamic";
@@ -28,17 +30,28 @@ export default async function HomePage() {
   });
   const gcalEmbedUrl = user ? getGcalEmbedUrl(user.preferences) : null;
 
-  const [weekRock, dayRock, habits, tasks] = user
+  const [weekRock, dayRock, habits, tasks, activeFocus] = user
     ? await Promise.all([
         getCurrentWeekRock(user.id, user.timezone),
         getTodayDailyRock(user.id, user.timezone),
         getTodayHabits(user.id, user.timezone),
         getTodayTasks(user.id, user.timezone),
+        getActiveFocusSession(user.id),
       ])
-    : [null, null, [], []];
+    : [null, null, [], [], null];
+
+  const focusOverlay = activeFocus
+    ? {
+        id: activeFocus.id,
+        startedAt: activeFocus.startedAt,
+        plannedMinutes: activeFocus.plannedMinutes,
+        dailyRockTitle: dayRock?.title ?? null,
+      }
+    : null;
 
   return (
     <>
+      {focusOverlay ? <FocusMode session={focusOverlay} /> : null}
       <Topbar
         title="Home"
         subtitle="Your unified workspace."

@@ -1,5 +1,6 @@
 import { Topbar } from "@/components/layout/Topbar";
 import { BlockerSettings } from "@/components/settings/BlockerSettings";
+import { FocusSettings } from "@/components/settings/FocusSettings";
 import { GcalSettings } from "@/components/settings/GcalSettings";
 import { HabitsSettings } from "@/components/settings/HabitsSettings";
 import { SettingsForm } from "@/components/settings/SettingsForm";
@@ -10,6 +11,7 @@ import { getBlockerState } from "@/lib/retention/blocker";
 import {
   getEffectiveAiSettings,
   getEffectiveUiPreferences,
+  getFocusPreferences,
   getGcalEmbedUrl,
   normalizeAiProvider,
 } from "@/lib/user-preferences";
@@ -86,6 +88,8 @@ export default async function SettingsPage() {
         <HabitsSettings habits={habits} />
 
         <GcalSettings initialEmbedUrl={getGcalEmbedUrl(user.preferences)} />
+
+        <FocusSettings initial={getFocusPreferences(user.preferences)} />
 
         <Card>
           <BlockerSettings

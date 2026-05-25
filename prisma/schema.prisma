@@ -136,6 +136,7 @@ model User {
   weekRocks              WeekRock[]
   dailyRocks             DailyRock[]
   integrationCredentials IntegrationCredential[]
+  focusSessions          FocusSession[]
 }
 
 model Week {
@@ -622,4 +623,24 @@ model IntegrationCredential {
 
   @@unique([userId, provider])
   @@index([userId])
+}
+
+enum FocusOutcome {
+  COMPLETED
+  CARRIED
+  ABANDONED
+}
+
+model FocusSession {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dailyRockId    String?
+  startedAt      DateTime      @default(now())
+  endedAt        DateTime?
+  plannedMinutes Int
+  outcome        FocusOutcome?
+  createdAt      DateTime      @default(now())
+
+  @@index([userId, startedAt])
 }

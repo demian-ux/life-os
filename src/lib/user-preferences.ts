@@ -14,6 +14,10 @@ export const userPreferencesSchema = z
     mascotMood: mascotMoodSchema.optional(),
     // Phase 1.4 — Google Calendar
     gcalEmbedUrl: z.string().url().max(2048).nullable().optional(),
+    // Phase 1.6 — Focus mode orchestration
+    focusBeforeCommand: z.string().max(512).nullable().optional(),
+    focusAfterCommand: z.string().max(512).nullable().optional(),
+    focusDefaultMinutes: z.number().int().min(5).max(240).optional(),
   })
   .passthrough();
 
@@ -72,4 +76,24 @@ export function getGcalEmbedUrl(rawPreferences: unknown): string | null {
   const preferences = parseUserPreferences(rawPreferences);
   const url = preferences.gcalEmbedUrl?.trim();
   return url && url.length > 0 ? url : null;
+}
+
+/**
+ * Focus mode settings (Phase 1.6). Default duration is 90 minutes per spec §9.
+ */
+export type FocusPreferences = {
+  beforeCommand: string | null;
+  afterCommand: string | null;
+  defaultMinutes: number;
+};
+
+export function getFocusPreferences(
+  rawPreferences: unknown,
+): FocusPreferences {
+  const preferences = parseUserPreferences(rawPreferences);
+  return {
+    beforeCommand: preferences.focusBeforeCommand?.trim() || null,
+    afterCommand: preferences.focusAfterCommand?.trim() || null,
+    defaultMinutes: preferences.focusDefaultMinutes ?? 90,
+  };
 }

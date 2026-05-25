@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { Check, Pencil, Sparkles } from "lucide-react";
 import { Button, Card } from "@/components/ui";
 import { setDailyRock, completeDailyRock } from "@/lib/actions/rock-actions";
+import { StartFocusButton } from "@/components/focus/StartFocusButton";
 import { RockEditDialog } from "./RockEditDialog";
 import type { TraitAxis } from "@prisma/client";
 
@@ -84,12 +85,12 @@ export function DayRockCard({
                   +{rock.xpReward} XP
                 </span>
               </div>
-              <p className="mt-2 text-[12px] italic text-bark-400">
-                &ldquo;Start deep work&rdquo; lands in Phase 1.6.
-              </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              {rock.status !== "DONE" ? (
+                <StartFocusButton dailyRockId={rock.id} />
+              ) : null}
               <Button
                 type="button"
                 variant="success"

@@ -109,3 +109,42 @@ export async function updateGcalEmbedUrl(input: unknown): Promise<Result> {
   revalidatePath("/home");
   return { ok: true };
 }
+
+// ---------------------------------------------------------------------------
+// Phase 1.6 — Focus mode preferences
+// ---------------------------------------------------------------------------
+
+const focusPrefsSchema = z.object({
+  beforeCommand: z.string().max(512).nullable(),
+  afterCommand: z.string().max(512).nullable(),
+  defaultMinutes: z.number().int().min(5).max(240),
+});
+
+export async function updateFocusPreferences(input: unknown): Promise<Result> {
+  const parsed = focusPrefsSchema.safeParse(input);
+  if (!parsed.success) {
+    return fail(parsed.error.issues[0]?.message ?? "Invalid focus settings");
+  }
+  const user = await prisma.user.findFirst({
+    orderBy: { createdAt: "asc" },
+    select: { id: true, preferences: true },
+  });
+  if (!user) return fail("No user found");
+
+  const existing = parseUserPreferences(user.preferences);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      preferences: {
+        ...existing,
+        focusBeforeCommand: parsed.data.beforeCommand?.trim() || null,
+        focusAfterCommand: parsed.data.afterCommand?.trim() || null,
+        focusDefaultMinutes: parsed.data.defaultMinutes,
+      },
+    },
+  });
+
+  revalidatePath("/settings");
+  revalidatePath("/home");
+  return { ok: true };
+}

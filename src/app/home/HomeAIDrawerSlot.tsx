@@ -23,10 +23,16 @@ const STORAGE_KEY = "home-ai-drawer-open";
 export function HomeAIDrawerSlot({ children }: HomeAIDrawerSlotProps) {
   const [open, setOpen] = useState(false);
 
+  // One-time hydration of session-persisted open state. This runs once on
+  // mount (empty dep array) and reads from sessionStorage — a browser-only
+  // API — so we can't compute it during SSR or as the useState initializer.
+  // Setting state in an effect is the intentional synchronisation point here.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem(STORAGE_KEY) === "1") setOpen(true);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     if (typeof window === "undefined") return;
